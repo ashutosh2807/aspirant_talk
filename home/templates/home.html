@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+
+{% block style %}
+<style>
+ .button-card{
+    width: 30%;
+    height: 50%;
+    padding: 3%;
+    margin-bottom: 3%;
+    border-radius: 5%;
+    background-color: yellow;
+    color: black;
+    /* background-image: url("https://img.freepik.com/premium-vector/yellow-color-halftone-youtube-thumbnail-background_562076-95.jpg?w=360"); */
+}
+.button-card:hover{
+    background-color: aqua;
+    color: black;
+    opacity: 1.0;
+    background-position: 100% 100%;
+}
+.button-card {
+  background: linear-gradient(#252525, #252525 50%, #2ecc71 50%, #2ecc71);
+  background-size: 100% 200%;
+  /*trasition effect for background*/
+  transition: background 1s;
+}
+
+.img-card{
+    width: 300px;
+    height: 60%;
+    opacity: 0.9;
+   opacity: 1;
+   transition: 0.3s;
+   margin-left: -35px;
+   /* margin-top: -90px;
+   border-radius: 17px 19px 0px 0px; */
+}
+.img-card:hover{
+   opacity: 0.3;
+}
+
+.portfolioDisc {
+	width: 300px;
+    height: 0px;
+	padding-top: 0px;
+    overflow:hidden;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    margin-top:300px;
+	position:absolute;
+	background-color:#000;
+	font-size: 15px;
+	line-height: 18px;
+	text-align:center;
+	color: #FFF;
+    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
+}
+.button-card {
+	/* background-color: red; */
+	width:300px;
+	height: 300px;
+	/* position:relative; */
+	}
+
+
+.button-card:hover .portfolioDisc {
+	margin-top:221px;
+    height:69px;
+	padding-top: 10px;
+    position: relative;
+   margin-top: 32px;
+   margin-left: -35px;
+   border-radius: 0px 0px 16px 16px;
+	
+}
+
+</style>
+{% endblock style %}
+
+
+{% block body %}
+  <div class="container my-4">
+    {% for i in data %}
+    <br>content {{i.content | safe}}
+    <hr>
+    <button class="button-card" onclick="document.location='https://www.google.com'">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvYsviRv2XHdAXRCNnNknNl8K69vmw9hqhPQ&usqp=CAU" class="img-card" alt="">
+    <br>id  {{i.id}}
+   <br>title {{i.title }}
+   <p class="portfolioDisc">
+     <br>category{{i.category }}
+     <br>date {{i.upload_date }}
+    </p>
+     {% comment %} <br>slug  {{i.slug}} {% endcomment %}
+    {% endfor %}
+    </button>
+  </div>
+{% endblock body %}
+{% comment %} 
+{% block  script %}
+<script>
+</script>
+{% endblock  script %} {% endcomment %}
