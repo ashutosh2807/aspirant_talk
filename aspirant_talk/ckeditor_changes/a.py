@@ -2,7 +2,7 @@
 def movefile():
     import os
     import shutil
-    with open('a.txt','r') as firstfile, open('config.js','w+') as secondfile:
+    with open('/workspace/aspirant_talk/ckeditor_changes/a.txt','r') as firstfile, open('config.js','w+') as secondfile:
         # read content from first file
         for line in firstfile:
 
