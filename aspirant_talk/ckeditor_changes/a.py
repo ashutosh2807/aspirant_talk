@@ -9,4 +9,4 @@ def movefile():
                  # append content to second file
                  secondfile.write(line)
 
-    shutil.move("config.js", "app/.heroku/python/lib/python3.10/site-packages/ckeditor/static/ckeditor/ckeditor")
+    shutil.move("config.js", "/workspace/.heroku/python/lib/python3.10/site-packages/ckeditor/static/ckeditor/ckeditor")
