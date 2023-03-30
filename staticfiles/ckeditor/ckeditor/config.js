@@ -4,7 +4,8 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-	// Define changes to default configuration here. For example:
+    // Define changes to default configuration here. For example:
+    CKEDITOR.config.filebrowserImageBrowseUrl = '/media/';
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 };
@@ -21,3 +22,7 @@ CKEDITOR.on("instanceReady", function(event) {
         }
     })
 });
+
+config.filebrowserUploadMethod = 'form';
+
+
