@@ -1,6 +1,8 @@
 from django.shortcuts import render,HttpResponse,redirect
 from .models import *
 from .forms import *
+from django.urls import reverse_lazy
+from django.contrib import messages
 from django.views.generic import TemplateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
@@ -8,6 +10,27 @@ from django.contrib.auth  import authenticate,  login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
+
+
+def cat_search(request):
+    cat = Category.objects.all()
+    context = {
+        'cat': cat
+    }
+    return render(request,'Category.html',context)
+
+class UserLoginView(LoginView):
+    redirect_authenticated_user = True
+    template_name = 'Login.html'
+    
+    def get_success_url(self):
+        return reverse_lazy('home') 
+    
+    def form_invalid(self, form):
+        messages.error(self.request,'Invalid username or password')
+        return self.render_to_response(self.get_context_data(form=form))
 
 class BlogDetailView(DetailView):
 
@@ -25,8 +48,10 @@ class BlogDetailView(DetailView):
 
 def home(request):
     data = Blog.objects.all()
+    cat = Category.objects.all()
     context = {
-        'data':data
+        'data':data,
+        'cat':cat
     }
     return render(request,'home.html',context)
 

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        #chips{
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        </style>
+</head>
+
+<body>
+    <div class="flex flex-wrap justify-center space-x-2" id="chips">
+        {% if user.is_superuser %}<a href="/create_cat" id="btn" class="btn btn-primary">Create a Category</a> {%endif%}
+        {%for cat in cat%}
+        <form action="/Category/" method="get">
+<input type="hidden" value="{{cat.name}}" name="cat">
+<button type="submit" id="btn">
+<span id="btn1"
+          class="px-4 py-2 rounded-full text-gray-500 bg-gray-200 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
+          {{cat.name}}
+        </span>
+    </a>
+</form>
+    {%endfor%}
+</div>      
+{% comment %} <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script> {% endcomment %}
+</body>
+
+</html>

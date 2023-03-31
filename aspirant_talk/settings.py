@@ -27,6 +27,8 @@ STATIC_ROOT = BASE_DIR / 'static'
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
 # DEBUG = os.getenv("DEBUG", "False") == "True"
 # ALLOWED_HOSTS = []
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     'crispy_bootstrap5',
     'django.contrib.humanize',
+    
 ]
 
 

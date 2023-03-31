@@ -82,7 +82,10 @@
 
 
 {% block body %}
-  <div class="container my-4">
+
+{% include 'category.html' %}
+
+<div class="container my-4">
     {% for i in data %}
     <button class="button-card" onclick="document.location='https://www.google.com'">
     <img src="{{ i.Thumbnail.url }}" class="img-card" alt="">
