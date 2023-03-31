@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from ckeditor_uploader.fields import RichTextUploadingField
@@ -27,9 +28,17 @@ class Blog(models.Model):
     title = models.CharField(max_length=200,blank=False,null=False)
     category = models.ForeignKey(Sub_category,on_delete=models.CASCADE)
     content = RichTextUploadingField()
+    # liked = models.ManyToManyField(User,default=None,blank=True,related_name='liked')
+    Thumbnail = models.ImageField(upload_to="Thumbnails", blank=True, null=True)
     upload_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return str(self.id) + '-> ' +self.title
+
+    def get_absolute_url(self):
+        return reverse('home:blogs')
+    # @property
+    # def num_likes(self):
+    #     return self.liked.all().count()
     
 class Comment(models.Model):
     comment = models.TextField()
@@ -38,4 +47,15 @@ class Comment(models.Model):
     def __str__ (self):
         return str(self.id) + ': '+ self.comment
 
-# Create your models here.
+# LIKE_CHOICES = (
+#     ('Like','Like'),
+#     ('Unlike','Unlike'),
+# )
+# # Create your models here.
+# class Like(models.Model):
+#     user= models.ForeignKey(User, on_delete=models.CASCADE)
+#     post = models.ForeignKey(Blog, on_delete=models.CASCADE)
+#     value = models.CharField(choices=LIKE_CHOICES,default='like',max_length=10)
+
+#     def __str__(self):
+#         return str(self.post)

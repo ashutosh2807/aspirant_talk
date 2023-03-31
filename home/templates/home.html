@@ -84,10 +84,10 @@
 {% block body %}
   <div class="container my-4">
     {% for i in data %}
-    <br>content {{i.content | safe}}
-    <hr>
     <button class="button-card" onclick="document.location='https://www.google.com'">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvYsviRv2XHdAXRCNnNknNl8K69vmw9hqhPQ&usqp=CAU" class="img-card" alt="">
+    <img src="{{ i.Thumbnail.url }}" class="img-card" alt="">
+
+      <h1></h1>
     <br>id  {{i.id}}
    <br>title {{i.title }}
    <p class="portfolioDisc">
