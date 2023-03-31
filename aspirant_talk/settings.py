@@ -26,7 +26,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 # SECRET_KEY = 'django-insecure-*&m8=l88tmtrvg*-@m6&@wrus7%&dlt+fzbdo!95#o4@47m@j&'
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", get_random_secret_key())
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 # DEBUG = os.getenv("DEBUG", "False") == "True"
