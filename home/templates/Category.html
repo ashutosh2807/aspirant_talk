@@ -15,7 +15,7 @@
 {% block body %}
 
 <div class="flex flex-wrap justify-center space-x-2" id="chips">
-    {% if user.is_superuser %}<a href="/create_cat" id="btn" class="btn btn-primary">Create a Category</a> {%endif%}
+    {% if user.is_superuser %}<a href="/addSubCategory" id="btn" class="btn btn-primary">Create a SubCategory</a> {%endif%}
     {%for cat in subcat %}
     <form action="/Category/" method="get">
     <input type="hidden" value="{{cat.name}}" name="cat">
