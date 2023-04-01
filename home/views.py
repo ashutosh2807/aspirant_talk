@@ -76,6 +76,7 @@ class Blogview(LoginRequiredMixin,FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_heading'] = 'Register a Blog'
+        context['title'] = 'Add Blog'
         return context
 
     def form_valid(self, form):
@@ -104,6 +105,7 @@ class Categoryview(LoginRequiredMixin,FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_heading'] = 'Register a Category'
+        context['title'] = 'Add Category'
         return context
 
     def form_valid(self, form):
@@ -123,6 +125,7 @@ class SubCategoryview(LoginRequiredMixin,FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_heading'] = 'Register a SubCategory'
+        context['title'] = 'Add SubCategory'
         return context
 
     def form_valid(self, form):
@@ -142,6 +145,7 @@ class userCreateview(LoginRequiredMixin,FormView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_heading'] = 'Register a User'
+        context['title'] = 'Add User'
         return context
 
     def form_valid(self, form):
