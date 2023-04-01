@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render,HttpResponse,redirect
 from .models import *
 from .forms import *
@@ -13,19 +14,88 @@ from django.utils import timezone
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-
-def sub_cats(request,id):
-    Sub_cat = Sub_category.objects.filter(category = id)
-    cat = Category.objects.filter(id= id)
+def Category_search(request):
+    page_id = request.GET['Page']
+    Sub_cat = Sub_category.objects.filter(category = page_id).order_by('name')
+    cat = Category.objects.filter(id= page_id)
     desc = ''
     for i in cat:
         desc = i.description
 
     context = {
         'subcat': Sub_cat,
-        'desc' : desc
+        'desc' : desc,
+        'page_id': page_id,
+        'blog': '',
     }
-    return render(request,'Category.html',context)
+
+    if request.method == 'GET':
+        searched = request.GET['Category']
+        posts = Blog.objects.filter(category__name = searched,category__category= page_id)
+        paginator = Paginator(posts, 4) # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        posts = paginator.get_page(page_number)
+        context['blog'] =  posts
+        context['searched'] = searched
+        context['posts'] = posts
+        
+        return render(request, "Category.html", context)
+    else:
+        context['searched'] = 'null'
+        return render(request, "Category.html", context)
+
+
+def search(request):
+    page_id = request.POST['page']
+    Sub_cat = Sub_category.objects.filter(category = page_id).order_by('name')
+    cat = Category.objects.filter(id= page_id)
+    desc = ''
+    for i in cat:
+        desc = i.description
+
+    context = {
+        'subcat': Sub_cat,
+        'desc' : desc,
+        'page_id': page_id,
+        'blog': ''
+    }
+
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        posts = Blog.objects.filter(title__contains=searched,category__category= page_id)
+        paginator = Paginator(posts, 4) # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        posts = paginator.get_page(page_number)
+        context['blog'] =  posts
+        context['posts'] =  posts
+        context['searched'] = searched
+        return render(request, "Category.html", context)
+    else:
+        context['searched'] = 'null'
+        return render(request, "Category.html", context)
+
+
+def sub_cats(request,id):
+        Sub_cat = Sub_category.objects.filter(category = id).order_by('name')
+        cat = Category.objects.filter(id= id)
+        blogs = Blog.objects.filter(category__category= id)
+        paginator = Paginator(blogs, 4) # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        posts = paginator.get_page(page_number)
+        desc = ''
+        for i in cat:
+            desc = i.description
+        context = {
+            'subcat': Sub_cat,
+            'desc' : desc,
+            'blog': blogs,
+            'page_id': int(id),
+            'posts': posts,
+        }
+        context['searched'] = 'null'
+        return render(request,'Category.html',context)
+
+
 
 class UserLoginView(LoginView):
     redirect_authenticated_user = True

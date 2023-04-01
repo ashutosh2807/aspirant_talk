@@ -1,0 +1,53 @@
+{% load humanize %}
+<div class="main">
+  <div class="grid-container">
+  {% for post in blog %}
+    <div class="grid-item">
+      <div class="flex justify-center">
+        <div class="flex flex-col md:flex-row md:max-w-auto rounded-lg bg-white shadow-lg">
+          <img class="p-1 bg-white border rounded max-w-xs" src="{{post.Thumbnail.url}}" alt="" />
+          <div class="p-6 flex flex-col justify-start">
+            <h5 class="text-gray-900 text-2xl font-medium mb-2"> {{post.title }}</h5>
+            {% comment %} <small style="font-size: 12px;">by <u><b>{{post.author}}</b></u></small> {% endcomment %}
+            <p class="text-gray-700 text-base mb-4">
+            {{post.content |truncatechars:340 |striptags }}
+          </p>
+          <a href="/blog/{{post.slug}}" class="btn btn-primary">Read more </a>
+          {% if user.is_superuser %} <a href="/delete_blog_post/{{post.slug}}/" class="btn btn-danger my-2"><i class="fa fa-trash"></i></a>{% endif %}
+          <p class="text-gray-700 text-base mb-4" style="text-align: center;">
+            Category: {{post.category |truncatechars:100}}
+          </p>
+            <p class="text-gray-600 text-xs">last updated: {{post.upload_date | naturalday}},{{post.upload_date | naturaltime}}</p>
+  </div>
+        </div>
+      </div>
+    </div>
+    {%endfor%}
+
+    <div class="pagination">
+      <span class="step-links">
+          {% if posts.has_previous %}
+              <a class="btn btn-dark" href="?page=1">&laquo;&laquo; first</a>
+              <a class="btn btn-dark" href="?page={{ posts.previous_page_number }}">&laquo; previous</a>
+          {% endif %}
+  
+          <span class="current">
+            
+              Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+          </span>
+  
+          {% if posts.has_next %}
+              <a class="btn btn-dark" href="?page={{ posts.next_page_number }}">next &raquo;</a>
+              <a class="btn btn-dark" href="?page={{ posts.paginator.num_pages }}">last &raquo;&raquo;</a>
+          {% endif %}
+      </span>
+  </div>
+
+  </div>
+  </div>
+<button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light" class="inline-block p-3 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out bottom-5 right-5" id="btn-back-to-top">
+  <svg aria-hidden="true" focusable="false" data-prefix="fas" class="w-4 h-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"></path></svg>
+</button>
+
+
+

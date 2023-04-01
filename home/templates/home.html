@@ -6,100 +6,84 @@ home
 
 {% block style %}
 <style>
- .button-card{
-    width: 30%;
-    height: 50%;
-    padding: 3%;
-    margin-bottom: 3%;
-    border-radius: 5%;
-    background-color: yellow;
-    color: black;
-    /* background-image: url("https://img.freepik.com/premium-vector/yellow-color-halftone-youtube-thumbnail-background_562076-95.jpg?w=360"); */
-}
-.button-card:hover{
-    background-color: aqua;
-    color: black;
-    opacity: 1.0;
-    background-position: 100% 100%;
-}
-.button-card {
-  background: linear-gradient(#252525, #252525 50%, #2ecc71 50%, #2ecc71);
-  background-size: 100% 200%;
-  /*trasition effect for background*/
-  transition: background 1s;
-}
+    .cntainer {
+      position: relative;
+      width: 30%;
+      display: inline-block;
+      margin:15px;
+    }
+    
+    .image {
+      display: block;
+      width: 350px;
+      height: 350px;
+      opacity: 1;
+    }
+    
+    .overlay {
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      right: 0;
+      background-color: #008CBA;
+      overflow: hidden;
+      width: 100%;
+      height:0;
+      transition: .5s ease;
+      opacity: 0.7;
+    }
+    
+    .cntainer:hover .overlay {
+      bottom: 0;
+      height: 100%;
+    }
+    a{
+        color: #ffffff;
+    }
 
-.img-card{
-    width: 300px;
-    height: 60%;
-    opacity: 0.9;
-   opacity: 1;
-   transition: 0.3s;
-   margin-left: -35px;
-   /* margin-top: -90px;
-   border-radius: 17px 19px 0px 0px; */
-}
-.img-card:hover{
-   opacity: 0.3;
-}
-
-.portfolioDisc {
-	width: 300px;
-    height: 0px;
-	padding-top: 0px;
-    overflow:hidden;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    transition: all 0.2s linear;
-    margin-top:300px;
-	position:absolute;
-	background-color:#000;
-	font-size: 15px;
-	line-height: 18px;
-	text-align:center;
-	color: #FFF;
-    font-family: FontAwesome, "Open Sans", Verdana, sans-serif;
-}
-.button-card {
-	/* background-color: red; */
-	width:300px;
-	height: 300px;
-	/* position:relative; */
-	}
-
-
-.button-card:hover .portfolioDisc {
-	margin-top:221px;
-    height:69px;
-	padding-top: 10px;
-    position: relative;
-   margin-top: 32px;
-   margin-left: -35px;
-   border-radius: 0px 0px 16px 16px;
-	
-}
-
-</style>
-{% endblock style %}
+    .text {
+      color: white;
+      font-size: 20px;
+      position: absolute;
+      top:30%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 10px;
+    }
+    </style>
+    {% endblock style %}
 
 
 {% block body %}
 
-<div class="container my-4">
+{% comment %} <div class="container my-4"> {% endcomment %}
     {% for i in cat %}
-    <button class="button-card" onclick="document.location='/Category/{{i.id}}'">
-    <img src="{{ i.Thumbnail.url }}" class="img-card" alt="">
 
-      {{ i.name }}
-   
-   <p class="portfolioDisc">
-  <br>    {{i.description | truncatechars:30 }}
-    </p>
+    <div class="cntainer">
+        <img src="{{ i.Thumbnail.url }}" alt="Avatar" class="image">
+        <div class="overlay">
+          <div class="text">   {{ i.name }}</div>
+          <br><br>
+          <div class="text" style="margin-top: 125px;">
+              <a href="/Category/{{i.id}}" >Url</a>
+
+              <br><br>
+    
+         <p style="">
+              {{i.description | truncatechars:70 }}
+         </p>
+
+          </div>
+        </div>
+      </div>
     {% endfor %}
-    </button>
-  </div>
+  {% comment %} </div> {% endcomment %}
 {% endblock body %}
+
+
 {% comment %} 
 {% block  script %}
 <script>

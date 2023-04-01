@@ -13,7 +13,9 @@ urlpatterns = [
     path('blog/<slug:slug>/', views.BlogDetailView.as_view()),
     path("Category/<int:id>", views.sub_cats, name="subcat_search"),
     path('login/', views.UserLoginView.as_view(),name='login'),
-     path('logout/', LogoutView.as_view(next_page='home'),name='logout')
+    path("search/", views.search, name="search"),
+    path("Category_search/", views.Category_search, name="Category_search"),
+    path('logout/', LogoutView.as_view(next_page='home'),name='logout')
 
     # path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
 ]

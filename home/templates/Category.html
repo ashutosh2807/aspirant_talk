@@ -1,39 +1,141 @@
 {% extends 'base.html' %}
+
 {% block title %}
     Category
 {% endblock title %}
+{% block head %}
+
+<link rel='stylesheet' href='https://npmcdn.com/flickity@2/dist/flickity.css'><link rel="stylesheet" href="./style.css">
+{% endblock head %}
+
 
 {% block style %}
 
 <style>
+    #search{
+        margin-top: 1px;
+        padding-top: 10px;
+    }
+  img{
+    margin: 10px;
+    margin-left: 10px;
+  }
+  
+  .pagination{
+    margin-left: 45%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+  
+  #btn-back-to-top {
+    position: fixed;
+    display: none;
+  }
+  
+   .grid-container {
+    display: grid;
+    grid-template-columns: auto;
+  }
+  .grid-item {
+    background-color: inherit;
+    padding: 5px;
+    font-size: 30px;
+  
+  }
+  </style>
+  
+
+<style>
+
+    /* external css: flickity.css */
+
+{% comment %} * { box-sizing: border-box; } {% endcomment %}
+
+body { font-family: sans-serif; }
+
+.carousel {
+  background: #FAFAFA;
+}
+
+.carousel-cell {
+    margin: 15px;
+    display:inline-block;
+}
+
+/* cell number */
+.carousel-cell:before {
+  display:inline-block;
+  line-height: 200px;
+  font-size: 80px;
+  color: white;
+}
+
+.button {
+  font-size: 22px;
+}
+
+.button-group {
+  margin-bottom: 0px;
+}
+
     #chips{
         margin-top: 10px;
         margin-bottom: 10px;
     }
-
     </style>
 
 {% endblock style %}
 
 {% block body %}
 
-<div class="flex flex-wrap justify-center space-x-2" id="chips">
-    {% if user.is_superuser %}<a href="/addSubCategory" id="btn" class="btn btn-primary">Create a SubCategory</a> {%endif%}
+{% include 'search.html' %}
+<div class ="container">
+<div class="carousel">
+    {% if user.is_superuser %}
+    <div class="carousel-cell">
+        <a href="/addSubCategory" class="btn btn-primary">Create a SubCategory</a>
+    </div>
+    {%endif%}
     {%for cat in subcat %}
-    <form action="/Category/" method="get">
-    <input type="hidden" value="{{cat.name}}" name="cat">
-    <button type="submit" id="btn">
-<span id="btn1"
-      class="px-4 py-2 rounded-full text-gray-500 bg-gray-200 font-semibold text-sm flex align-center w-max cursor-pointer active:bg-gray-300 transition duration-300 ease">
-      {{cat.name}}
-    </span>
-</a>
-</form>
-{%endfor%}
-</div>      
-
+        <form action="/Category_search/" method="GET">
+            <input type="hidden" value="{{ cat.name }}" name="Category">
+            <input type="hidden" value="{{ page_id }}" name="Page">
+            <button type="submit" class="carousel-cell px-4 py-2 rounded-full text-gray-500 bg-gray-200 font-semibold text-sm" >
+            {{cat.name}}
+            </button>
+        </form>
+        {%endfor%}
+  </div>
+</div>
 <div class="container"><h5>{{ desc }}</h5></div>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9666660614641758"
-     crossorigin="anonymous"></script>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+
+{% include 'blogs.html' %}
+
+<script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+<script src='https://npmcdn.com/flickity@2/dist/flickity.pkgd.js'></script>
 {% endblock body %}
+
+{% block script %}
+<script>
+
+    // external js: flickity.pkgd.js
+
+var $carousel = $('.carousel').flickity({
+    groupCells: true
+  });
+  
+  $('.button-group').on( 'click', '.button', function() {
+    var index = $(this).index();
+    $carousel.flickity( 'selectCell', index );
+  });
+</script>
+
+<script>
+    setInterval(function() {
+       document.querySelector('.flickity-page-dots').style.display = 'none'
+   }, 500);
+   </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9666660614641758"
+crossorigin="anonymous"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+{% endblock script %}
