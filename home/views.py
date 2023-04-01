@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.views import LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def sub_cats(request,id):
@@ -38,6 +38,7 @@ class UserLoginView(LoginView):
         messages.error(self.request,'Invalid username or password')
         return self.render_to_response(self.get_context_data(form=form))
 
+
 class BlogDetailView(DetailView):
 
     model = Blog
@@ -63,7 +64,7 @@ def home(request):
 
 
 
-class Blogview(FormView):
+class Blogview(LoginRequiredMixin,FormView):
     initial = {
     }
     
@@ -90,7 +91,8 @@ class Blogview(FormView):
 
         return super().form_valid(form)
 
-class Categoryview(FormView):
+
+class Categoryview(LoginRequiredMixin,FormView):
     initial = {
     }
     
@@ -108,7 +110,7 @@ class Categoryview(FormView):
         form.save(commit=True)
         return super().form_valid(form)
 
-class SubCategoryview(FormView):
+class SubCategoryview(LoginRequiredMixin,FormView):
     initial = {
     
     }
@@ -127,7 +129,7 @@ class SubCategoryview(FormView):
         form.save(commit=True)
         return super().form_valid(form)
 
-class userCreateview(FormView):
+class userCreateview(LoginRequiredMixin,FormView):
     initial = {
     
     }
