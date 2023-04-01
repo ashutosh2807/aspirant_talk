@@ -14,10 +14,16 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 
 
-def cat_search(request):
-    cat = Category.objects.all()
+def sub_cats(request,id):
+    Sub_cat = Sub_category.objects.filter(category = id)
+    cat = Category.objects.filter(id= id)
+    desc = ''
+    for i in cat:
+        desc = i.description
+
     context = {
-        'cat': cat
+        'subcat': Sub_cat,
+        'desc' : desc
     }
     return render(request,'Category.html',context)
 

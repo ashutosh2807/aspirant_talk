@@ -11,7 +11,7 @@ urlpatterns = [
     path('addSubCategory/',views.SubCategoryview.as_view()),
     path('addAuser/',views.userCreateview.as_view()),
     path('blog/<slug:slug>/', views.BlogDetailView.as_view()),
-    # path("Category/", views.cat_search, name="cat_search"),
+    path("Category/<int:id>", views.sub_cats, name="subcat_search"),
     path('login/', views.UserLoginView.as_view(),name='login'),
      path('logout/', LogoutView.as_view(next_page='home'),name='logout')
 

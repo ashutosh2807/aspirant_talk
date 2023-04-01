@@ -83,21 +83,16 @@
 
 {% block body %}
 
-{% include 'category.html' %}
-
 <div class="container my-4">
-    {% for i in data %}
-    <button class="button-card" onclick="document.location='https://www.google.com'">
+    {% for i in cat %}
+    <button class="button-card" onclick="document.location='/Category/{{i.id}}'">
     <img src="{{ i.Thumbnail.url }}" class="img-card" alt="">
 
-      <h1></h1>
-    <br>id  {{i.id}}
-   <br>title {{i.title }}
+      {{ i.name }}
+   
    <p class="portfolioDisc">
-     <br>category{{i.category }}
-     <br>date {{i.upload_date }}
+  <br>    {{i.description | truncatechars:30 }}
     </p>
-     {% comment %} <br>slug  {{i.slug}} {% endcomment %}
     {% endfor %}
     </button>
   </div>

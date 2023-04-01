@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block head %}{{form.media}}{% endblock head %}
+{% block head %}
+{{form.media}}
+
+{% endblock head %}
 
 
 
@@ -35,5 +38,12 @@ document.getElementsByClassName('fill-current')[1].style.display = 'none'; {% en
     {
         document.getElementsByTagName('select')[i].classList.add('form-control')
     }
+    
 </script>
-{% endblock script %}
+
+<script>
+     setInterval(function() {
+        document.querySelector('#cke_93').style.display = 'none'
+    }, 1000);
+    </script>
+    {% endblock script %}
