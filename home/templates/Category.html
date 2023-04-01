@@ -107,7 +107,11 @@ body { font-family: sans-serif; }
         {%endfor%}
   </div>
 </div>
-<div class="container"><h5>{{ desc }}</h5></div>
+<div class="container"><h5>
+    {% if posts.number == 1 %}
+    {{ desc }}
+    {% endif %}
+</h5></div>
 
 {% include 'blogs.html' %}
 
