@@ -83,6 +83,8 @@
 
 {% block body %}
 
+{% include 'Category.html' %}
+
 <div class="container my-4">
     {% for i in cat %}
     <button class="button-card" onclick="document.location='/Category/{{i.id}}'">
