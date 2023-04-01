@@ -26,7 +26,7 @@ def Category_search(request):
         'subcat': Sub_cat,
         'desc' : desc,
         'page_id': page_id,
-        'blog': '',
+        'posts': '',
     }
 
     if request.method == 'GET':
@@ -35,9 +35,8 @@ def Category_search(request):
         paginator = Paginator(posts, 4) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         posts = paginator.get_page(page_number)
-        context['blog'] =  posts
+        context['posts'] =  posts
         context['searched'] = searched
-        context['posts'] = posts
         
         return render(request, "Category.html", context)
     else:
@@ -57,7 +56,7 @@ def search(request):
         'subcat': Sub_cat,
         'desc' : desc,
         'page_id': page_id,
-        'blog': ''
+        'posts': ''
     }
 
     if request.method == 'POST':
@@ -66,7 +65,6 @@ def search(request):
         paginator = Paginator(posts, 4) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         posts = paginator.get_page(page_number)
-        context['blog'] =  posts
         context['posts'] =  posts
         context['searched'] = searched
         return render(request, "Category.html", context)
@@ -78,8 +76,8 @@ def search(request):
 def sub_cats(request,id):
         Sub_cat = Sub_category.objects.filter(category = id).order_by('name')
         cat = Category.objects.filter(id= id)
-        blogs = Blog.objects.filter(category__category= id)
-        paginator = Paginator(blogs, 4) # Show 25 contacts per page.
+        posts = Blog.objects.filter(category__category= id)
+        paginator = Paginator(posts, 4) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         posts = paginator.get_page(page_number)
         desc = ''
@@ -88,9 +86,8 @@ def sub_cats(request,id):
         context = {
             'subcat': Sub_cat,
             'desc' : desc,
-            'blog': blogs,
-            'page_id': int(id),
             'posts': posts,
+            'page_id': int(id),
         }
         context['searched'] = 'null'
         return render(request,'Category.html',context)
