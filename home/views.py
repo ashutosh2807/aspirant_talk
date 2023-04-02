@@ -81,8 +81,12 @@ def Category_search(request):
 
 def search(request):
     page_id = request.POST['page']
-    Sub_cat = Sub_category.objects.filter(category = page_id).order_by('name')
-    cat = Category.objects.filter(id= page_id)
+    if page_id == '' :
+        cat = Category.objects.all()
+        Sub_cat = Sub_category.objects.all()
+    else:  
+        Sub_cat = Sub_category.objects.filter(category = page_id).order_by('name')
+        cat = Category.objects.filter(id= page_id)
     desc = ''
     for i in cat:
         desc = i.description
@@ -96,7 +100,10 @@ def search(request):
 
     if request.method == 'POST':
         searched = request.POST['searched']
-        posts = Blog.objects.filter(title__contains=searched,category__category= page_id).order_by('-upload_date')
+        if page_id == '' :
+            posts = Blog.objects.filter(title__contains=searched).order_by('-upload_date')
+        else:
+            posts = Blog.objects.filter(title__contains=searched,category__category= page_id).order_by('-upload_date')
         paginator = Paginator(posts, 7) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         posts = paginator.get_page(page_number)
