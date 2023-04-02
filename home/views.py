@@ -15,6 +15,7 @@ from django.utils import timezone
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+@login_required
 def deleteComment(request):
         comment_id = request.POST['comment']
         comment = Comment.objects.get(id = comment_id)
