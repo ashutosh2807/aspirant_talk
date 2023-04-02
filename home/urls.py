@@ -17,7 +17,9 @@ urlpatterns = [
     path("edit_blog_post/<str:slug>/", views.UpdatePostView.as_view(), name="edit_blog_post"),
     path("delete_blog_post/<str:slug>/", views.Delete_Blog_Post, name="delete_blog_post"),
     path("Category_search/", views.Category_search, name="Category_search"),
-    path('logout/', LogoutView.as_view(next_page='home'),name='logout')
+    path('logout/', LogoutView.as_view(next_page='home'),name='logout'),
+    path('deleteComment/',views.deleteComment, name="comment"),
+    path('commentSave/',views.commentSave, name="comment")
 
     # path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
 ]

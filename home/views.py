@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator
-from django.shortcuts import render,HttpResponse,redirect
+from django.shortcuts import render,HttpResponse,redirect,HttpResponseRedirect
 from .models import *
 from .forms import *
 from django.contrib.auth.models import User
@@ -14,6 +14,22 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+def deleteComment(request):
+        comment_id = request.POST['comment']
+        comment = Comment.objects.get(id = comment_id)
+        comment.delete()
+        referer = request.META.get('HTTP_REFERER')
+        return HttpResponseRedirect(referer)
+
+def commentSave(request):
+    if request.method == "POST":
+        slug = request.POST['slug']
+        content = request.POST['content']
+        comment = Comment(blog_id=Blog.objects.get(slug=slug), comment=content)
+        comment.save()
+        referer = request.META.get('HTTP_REFERER')
+        return HttpResponseRedirect(referer)
 
 
 @login_required(login_url = '/login')
@@ -131,11 +147,22 @@ class BlogDetailView(DetailView):
 
     def get(self, request, *args, **kwargs):
         data = Blog.objects.get(slug=kwargs['slug'])
-        context = {'data': data}
+        posts = Comment.objects.filter(blog_id__slug = kwargs['slug']).order_by('-comment_date')
+        counts = Comment.objects.filter(blog_id__slug = kwargs['slug']).count()
+        paginator = Paginator(posts, 7) # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        posts = paginator.get_page(page_number)
+        context = {'data': data,'posts':posts,'counts':counts}
         return render(request, 'DetailedBlog.html',context)
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self,request,*args,**kwargs):
         data = Blog.objects.get(slug=kwargs['slug'])
+        posts = Comment.objects.filter(blog_id__slug = kwargs['slug']).order_by('-comment_date')
+        counts = Comment.objects.filter(blog_id__slug = kwargs['slug']).count()
+        paginator = Paginator(posts, 7) # Show 25 contacts per page.
+        page_number = request.GET.get('page')
+        posts = paginator.get_page(page_number)
+        context = {'data': data,'posts':posts,'counts':counts}
         context = {'data': data}
         return context
 

@@ -15,7 +15,7 @@
           <a href="/blog/{{post.slug}}" class="btn btn-primary">Read more </a>
           {% if user.is_superuser %} <a href="/delete_blog_post/{{post.slug}}/" class="btn btn-danger my-2"><i class="fa fa-trash"></i></a>{% endif %}
           <p class="text-gray-700 text-base mb-4" style="text-align: center;">
-            Category: {{post.category |truncatechars:100}}
+            Category: {{post.category.name }}
           </p>
             <p class="text-gray-600 text-xs">last updated: {{post.upload_date | naturalday}},{{post.upload_date | naturaltime}}</p>
   </div>
