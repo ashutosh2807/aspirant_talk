@@ -30,7 +30,7 @@
 
       <br>
       <p>{{data.content | safe }}.</p>
-      <p>{{ request.path }}</p>
+      <p>{{ request.build_absolute_uri }}</p>
       <hr>
       {% if user.is_authenticated %}
       <div class="container">
