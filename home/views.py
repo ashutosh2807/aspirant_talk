@@ -2,9 +2,10 @@ from django.core.paginator import Paginator
 from django.shortcuts import render,HttpResponse,redirect
 from .models import *
 from .forms import *
+from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView,UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormView
 from django.contrib.auth  import authenticate,  login, logout
@@ -13,6 +14,24 @@ from django.contrib import messages
 from django.utils import timezone
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+@login_required(login_url = '/login')
+def Delete_Blog_Post(request, slug):
+    data= User.objects.get(id=request.user.id)
+    posts = Blog.objects.get(slug=slug)
+    if request.method == "POST":
+        posts.delete()
+        return redirect('/')
+    return render(request, 'delete_blog_post.html', {'posts':posts,'data':data})
+
+
+class UpdatePostView(LoginRequiredMixin,UpdateView):
+    model = Blog
+    template_name = 'register.html'
+    fields = '__all__'
+    success_url = reverse_lazy('home')
+
 
 def Category_search(request):
     page_id = request.GET['Page']
@@ -31,8 +50,8 @@ def Category_search(request):
 
     if request.method == 'GET':
         searched = request.GET['Category']
-        posts = Blog.objects.filter(category__name = searched,category__category= page_id)
-        paginator = Paginator(posts, 4) # Show 25 contacts per page.
+        posts = Blog.objects.filter(category__name = searched,category__category= page_id).order_by('-upload_date')
+        paginator = Paginator(posts, 7) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         posts = paginator.get_page(page_number)
         context['posts'] =  posts
@@ -61,8 +80,8 @@ def search(request):
 
     if request.method == 'POST':
         searched = request.POST['searched']
-        posts = Blog.objects.filter(title__contains=searched,category__category= page_id)
-        paginator = Paginator(posts, 4) # Show 25 contacts per page.
+        posts = Blog.objects.filter(title__contains=searched,category__category= page_id).order_by('-upload_date')
+        paginator = Paginator(posts, 7) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         posts = paginator.get_page(page_number)
         context['posts'] =  posts
@@ -76,8 +95,8 @@ def search(request):
 def sub_cats(request,id):
         Sub_cat = Sub_category.objects.filter(category = id).order_by('name')
         cat = Category.objects.filter(id= id)
-        posts = Blog.objects.filter(category__category= id)
-        paginator = Paginator(posts, 4) # Show 25 contacts per page.
+        posts = Blog.objects.filter(category__category= id).order_by('-upload_date')
+        paginator = Paginator(posts, 7) # Show 25 contacts per page.
         page_number = request.GET.get('page')
         posts = paginator.get_page(page_number)
         desc = ''
@@ -121,7 +140,7 @@ class BlogDetailView(DetailView):
         return context
 
 def home(request):
-    data = Blog.objects.all()
+    data = Blog.objects.all().order_by('-upload_date')
     cat = Category.objects.all()
     context = {
         'data':data,

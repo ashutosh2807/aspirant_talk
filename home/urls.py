@@ -14,6 +14,8 @@ urlpatterns = [
     path("Category/<int:id>", views.sub_cats, name="subcat_search"),
     path('login/', views.UserLoginView.as_view(),name='login'),
     path("search/", views.search, name="search"),
+    path("edit_blog_post/<str:slug>/", views.UpdatePostView.as_view(), name="edit_blog_post"),
+    path("delete_blog_post/<str:slug>/", views.Delete_Blog_Post, name="delete_blog_post"),
     path("Category_search/", views.Category_search, name="Category_search"),
     path('logout/', LogoutView.as_view(next_page='home'),name='logout')
 

@@ -12,9 +12,9 @@
                   <h5 class="mt-0">by <u>{{data.author}}</u>
                         {% if user.is_authenticated %}
                         {% if user.id == data.author.id %}
-                        {% if user.is_superuser %} <small><a href="/delete_blog_post_1/{{data.slug}}" style="float:right;"class="btn btn-danger"><i class="fa fa-trash"></i></a></small>
+                        {% if user.is_superuser %} <small><a href="/delete_blog_post/{{data.slug}}" style="float:right;"class="btn btn-danger"><i class="fa fa-trash"></i></a></small>
                         {% elif user.id == data.author.id %}
-                        <small><a href="/delete_blog_post_1/{{data.slug}}" style="float:right;"class="btn btn-danger"><i class="fa fa-trash"></i></a></small>
+                        <small><a href="/delete_blog_post/{{data.slug}}" style="float:right;"class="btn btn-danger"><i class="fa fa-trash"></i></a></small>
                         {% endif %}
                         <small><a href="/edit_blog_post/{{data.slug}}/" class="edit btn btn-warning">Edit Blog Post</a></small>
                         {% endif %}
