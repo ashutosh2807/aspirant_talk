@@ -10,7 +10,7 @@
             <h5 class="text-gray-900 text-2xl font-medium mb-2"> {{post.title }}</h5>
             {% comment %} <small style="font-size: 12px;">by <u><b>{{post.author}}</b></u></small> {% endcomment %}
             <p class="text-gray-700 text-base mb-4">
-            {{post.content |truncatechars:340 |striptags }}
+            {{post.content | safe |striptags |truncatechars:340  }}
           </p>
           <a href="/blog/{{post.slug}}" class="btn btn-primary">Read more </a>
           {% if user.is_superuser %} <a href="/delete_blog_post/{{post.slug}}/" class="btn btn-danger my-2"><i class="fa fa-trash"></i></a>{% endif %}

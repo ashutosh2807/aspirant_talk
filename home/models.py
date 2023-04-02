@@ -37,7 +37,7 @@ class Blog(models.Model):
         return str(self.id) + '-> ' +self.title
 
     def get_absolute_url(self):
-        return reverse('home:blogs')
+        return reverse('home')
     # @property
     # def num_likes(self):
     #     return self.liked.all().count()

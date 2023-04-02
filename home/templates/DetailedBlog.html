@@ -30,6 +30,7 @@
 
       <br>
       <p>{{data.content | safe }}.</p>
+      <p>{{ request.path }}</p>
       <hr>
       {% if user.is_authenticated %}
       <div class="container">
