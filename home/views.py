@@ -138,7 +138,7 @@ def sub_cats(request,id):
 
 class UserLoginView(LoginView):
     redirect_authenticated_user = True
-    template_name = 'Login.html'
+    template_name = 'register.html'
     
     def get_success_url(self):
         return reverse_lazy('home') 
